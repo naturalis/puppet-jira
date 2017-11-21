@@ -15,15 +15,23 @@ class jira::postgres(
   $diffcmd              = "/usr/bin/diff <(docker image inspect --format='{{.Id}}' ${jira::postgres_image}) <(docker inspect --format='{{.Image}}' ${container_name})"
   $service_cmd          = "/usr/sbin/service docker-${container_name} restart"
 
+  user { 'postgres' :
+    ensure              => present,
+    comment             => 'postgres user',
+    password            => sha1('postgres'),
+    uid                 => '999',
+
   include 'docker'
 
   file { $jira::postgres_dir :
     ensure              => directory,
+    owner               => 'postgres',
+    group               => 'postgres',
   }
 
   docker::run { $container_name :
     image               => $jira::postgres_image,
-    volumes             => ["${jira::postgres_dir}/db:/var/lib/postgresql"],
+    volumes             => ["${jira::postgres_dir}:/var/lib/postgresql","${jira::postgres_dir}/data:/var/lib/postgresql/data"],
     env                 => ['POSTGRES_USER=jira',"POSTGRES_PASSWORD=${jira::postgres_pass}",'POSTGRES_DB=jiradb','POSTGRES_ENCODING=UNICODE','POSTGRES_COLLATE=C','POSTGRES_COLLATE_TYPE=C'],
     require             => File[$jira::postgres_dir]
   }

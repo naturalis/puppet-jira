@@ -12,7 +12,7 @@ class jira (
   $postgres_pass,
   $data_dir             = '/data',
   $jira_port            = '80',
-  $jira_dir             = '/data/php',
+  $jira_dir             = '/data/jira',
   $jira_image           = 'blacklabelops/jira:7.5.2',
   $postgres_dir         = '/data/postgres',
   $postgres_image       = 'postgres:9.4',
