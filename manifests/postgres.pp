@@ -20,6 +20,7 @@ class jira::postgres(
     comment             => 'postgres user',
     password            => sha1('postgres'),
     uid                 => '999',
+  }
 
   include 'docker'
 
