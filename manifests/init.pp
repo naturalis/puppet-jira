@@ -34,4 +34,8 @@ class jira (
     require             => Class['docker','jira::postgres']
   }
 
+  class { 'jira::traefik' :
+    require             => Class['docker','jira::jira']
+  }
+
 }
