@@ -14,7 +14,7 @@ defaultEntryPoints = ["http","https"]
   [backends]
     [backends.jira]
       [backends.jira.servers.server1]
-        url = "<%= @jira_internal %>:8080"
+        url = "http://<%= @jira_internal %>:8080"
         weight = 1
   [frontends]
     [frontends.frontend-jira1]

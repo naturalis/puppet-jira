@@ -17,7 +17,7 @@ class jira::jira(
 
   include 'docker'
 
-  file { "/data/${jira::container_name}" :
+  file { "/data/${container_name}" :
     ensure              => directory,
     owner               => 1000,
     group               => 1000,
@@ -25,10 +25,10 @@ class jira::jira(
 
   docker::run { $container_name :
     image               => $jira::jira_image,
-    volumes             => ["${jira::container_name}:/var/atlassian/jira"],
+    volumes             => ["/data/${container_name}:/var/atlassian/jira"],
     links               => ['postgres:db'],
     env                 => ['JVM_MINIMUM_MEMORY=384m','JVM_MAXIMUM_MEMORY=1g','JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb',"JIRA_DB_PASSWORD=${jira::postgres_pass}",'DOCKER_WAIT_HOST=postgres','DOCKER_WAIT_PORT=5432'],
-    require             => File["/data/${jira::container_name}"]
+    require             => File["/data/${container_name}"]
   }
 
   exec { $service_cmd :

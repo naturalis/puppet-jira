@@ -17,21 +17,21 @@ class jira::traefik(
 
   include 'docker'
 
-  file { "/data/${jira::container_name}" :
+  file { "/data/${container_name}" :
     ensure              => directory,
   }
 
-  file { "/data/${jira::container_name}/traefik.toml" :
+  file { "/data/${container_name}/traefik.toml" :
     ensure              => present,
     content             => template('jira/traefik.toml.erb'),
-    require             => File["/data/${jira::container_name}"]
+    require             => File["/data/${container_name}"]
   }
 
   docker::run { $container_name :
     image               => $jira::traefik_image,
     ports               => ['8080:8080','80:80'],
-    volumes             => ["/data/${jira::container_name}/traefik.toml:/etc/traefik/traefik.toml"],
-    require             => File["/data/${jira::container_name}"]
+    volumes             => ["/data/${container_name}/traefik.toml:/etc/traefik/traefik.toml"],
+    require             => File["/data/${container_name}"]
   }
 
   exec { $service_cmd :
