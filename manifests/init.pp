@@ -10,15 +10,15 @@
 #
 class jira (
   $postgres_pass,
-  $data_dir             = '/data',
-  $jira_port            = '80',
-  $jira_dir             = '/data/jira',
+  $traefik_pass,
+  $jira_internal,
+  $jira_url,
   $jira_image           = 'blacklabelops/jira:7.5.2',
-  $postgres_dir         = '/data/postgres',
   $postgres_image       = 'postgres:9.4',
+  $traefik_image        = 'traefik:1.4-alpine',
 ){
 
-  file { $data_dir :
+  file { '/data' :
     ensure              => directory,
   }
 

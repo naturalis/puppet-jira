@@ -24,7 +24,7 @@ class jira::postgres(
 
   include 'docker'
 
-  file { $jira::postgres_dir :
+  file { "/data/${jira::container_name}" :
     ensure              => directory,
     owner               => 'postgres',
     group               => 'postgres',
@@ -32,9 +32,9 @@ class jira::postgres(
 
   docker::run { $container_name :
     image               => $jira::postgres_image,
-    volumes             => ["${jira::postgres_dir}:/var/lib/postgresql","${jira::postgres_dir}/data:/var/lib/postgresql/data"],
+    volumes             => ["/data/${jira::container_name}/data:/var/lib/postgresql/data"],
     env                 => ['POSTGRES_USER=jira',"POSTGRES_PASSWORD=${jira::postgres_pass}",'POSTGRES_DB=jiradb','POSTGRES_ENCODING=UNICODE','POSTGRES_COLLATE=C','POSTGRES_COLLATE_TYPE=C'],
-    require             => File[$jira::postgres_dir]
+    require             => File["/data/${jira::container_name}"]
   }
 
   exec { $service_cmd :
