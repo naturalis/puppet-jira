@@ -14,8 +14,8 @@ class jira (
   $jira_internal,
   $jira_url,
   $jira_image           = 'blacklabelops/jira:7.5.2',
-  $postgres_image       = 'postgres:9.4',
-  $traefik_image        = 'traefik:1.4-alpine',
+  $postgres_image       = 'postgres:10.1',
+  $traefik_image        = 'traefik:1.4.3',
 ){
 
   file { '/data' :
