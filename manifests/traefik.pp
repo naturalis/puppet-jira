@@ -9,6 +9,11 @@
 # Apache2 license 2017.
 #
 class jira::traefik(
+
+  $traefik_pass         = $jira::traefik_pass,
+  $jira_internal        = $jira::jira_internal,
+  $jira_url             = $jira::jira_url,
+
 ){
 
   $container_name       = 'traefik'
@@ -27,10 +32,16 @@ class jira::traefik(
     require             => File["/data/${container_name}"]
   }
 
+  file { "/data/${container_name}/acme.json" :
+    ensure              => present,
+    mode                => '0600',
+    require             => File["/data/${container_name}"]
+  }
+
   docker::run { $container_name :
     image               => $jira::traefik_image,
-    ports               => ['8080:8080','80:80'],
-    volumes             => ["/data/${container_name}/traefik.toml:/etc/traefik/traefik.toml"],
+    ports               => ['8080:8080','80:80','443:443'],
+    volumes             => ["/data/${container_name}/traefik.toml:/etc/traefik/traefik.toml","/data/${container_name}/acme.json:/etc/traefik/acme.json"],
     require             => File["/data/${container_name}"]
   }
 
