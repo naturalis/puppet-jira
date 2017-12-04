@@ -29,7 +29,6 @@ class jira::traefik(
   file { "/data/${container_name}/traefik.toml" :
     ensure              => present,
     content             => template('jira/traefik.toml.erb'),
-    pull_on_start       => false,
     require             => File["/data/${container_name}"]
   }
 
@@ -43,6 +42,7 @@ class jira::traefik(
     image               => $jira::traefik_image,
     ports               => ['8080:8080','80:80','443:443'],
     volumes             => ["/data/${container_name}/traefik.toml:/etc/traefik/traefik.toml","/data/${container_name}/acme.json:/etc/traefik/acme.json"],
+    pull_on_start       => false,
     require             => File["/data/${container_name}"]
   }
 
