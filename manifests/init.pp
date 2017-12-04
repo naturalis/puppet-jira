@@ -13,7 +13,7 @@ class jira (
   $traefik_pass,
   $jira_internal,
   $jira_url,
-  $jira_image           = 'blacklabelops/jira:7.5.2',
+  $jira_image           = 'blacklabelops/jira:7.6.0',
   $postgres_image       = 'postgres:10.1',
   $traefik_image        = 'traefik:1.4.3',
 ){
