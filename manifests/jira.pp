@@ -28,6 +28,7 @@ class jira::jira(
     volumes             => ["/data/${container_name}:/var/atlassian/jira"],
     links               => ['postgres:db'],
     env                 => ['JVM_MINIMUM_MEMORY=384m','JVM_MAXIMUM_MEMORY=1g','JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb',"JIRA_DB_PASSWORD=${jira::postgres_pass}",'DOCKER_WAIT_HOST=postgres','DOCKER_WAIT_PORT=5432',"JIRA_PROXY_NAME=${jira::jira_url}",'JIRA_PROXY_PORT=443','JIRA_PROXY_SCHEME=https'],
+    pull_on_start       => false,
     require             => File["/data/${container_name}"]
   }
 

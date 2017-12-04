@@ -29,6 +29,7 @@ class jira::traefik(
   file { "/data/${container_name}/traefik.toml" :
     ensure              => present,
     content             => template('jira/traefik.toml.erb'),
+    pull_on_start       => false,
     require             => File["/data/${container_name}"]
   }
 

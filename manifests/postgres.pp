@@ -34,6 +34,7 @@ class jira::postgres(
     image               => $jira::postgres_image,
     volumes             => ["/data/${container_name}/data:/var/lib/postgresql/data"],
     env                 => ['POSTGRES_USER=jira',"POSTGRES_PASSWORD=${jira::postgres_pass}",'POSTGRES_DB=jiradb','POSTGRES_ENCODING=UNICODE','POSTGRES_COLLATE=C','POSTGRES_COLLATE_TYPE=C'],
+    pull_on_start       => false,
     require             => File["/data/${container_name}"]
   }
 
