@@ -42,6 +42,7 @@ class jira::traefik(
     image               => $jira::traefik_image,
     ports               => ['8080:8080','80:80','443:443'],
     volumes             => ["/data/${container_name}/traefik.toml:/etc/traefik/traefik.toml","/data/${container_name}/acme.json:/etc/traefik/acme.json"],
+    net                 => 'docker-net',
     pull_on_start       => false,
     require             => File["/data/${container_name}"]
   }

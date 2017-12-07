@@ -25,6 +25,11 @@ class jira (
   class { 'docker' :
     version             => 'latest',
   }
+  ->
+  docker_network { 'docker-net':
+    ensure              => present,
+    subnet              => '172.10.0.0/16',
+  }
 
   class { 'jira::postgres' :
     require             => Class['docker']

@@ -23,11 +23,6 @@ class jira::jira(
     group               => 1000,
   }
 
-  docker_network { 'docker-net':
-    ensure              => present,
-    subnet              => '172.10.0.0/16',
-  }
-
   docker::run { $container_name :
     image               => $jira::jira_image,
     volumes             => ["/data/${container_name}:/var/atlassian/jira"],
