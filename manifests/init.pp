@@ -14,6 +14,8 @@ class jira (
   $jira_url,
   $jira_internal        = '172.10.0.20',
   $jira_image           = 'blacklabelops/jira:7.6.0',
+  $jira_minmem          = '384m',
+  $jira_maxmem          = '1g',
   $postgres_image       = 'postgres:10.1',
   $traefik_image        = 'traefik:1.5.0',
 ){
